@@ -61,7 +61,7 @@ inserisci segnalazione
 
 <?php
 
- $conn = mysqli_connect ("localhost","id8503350_civicsense","civicsense","id8503350_civicsense") or die ("Connessione non riuscita"); 
+$conn = mysqli_connect("localhost", "id8503350_civicsense", "civicsense", "id8503350_civicsense") or die("Connessione non riuscita");
 
 $data = (isset($_POST['data'])) ? $_POST['data'] : null;
 $ora = (isset($_POST['ora'])) ? $_POST['ora'] : null;
@@ -73,20 +73,26 @@ $lat = (isset($_POST['lat'])) ? $_POST['lat'] : null;
 $long = (isset($_POST['long'])) ? $_POST['long'] : null;
 $tipo = (isset($_POST['tipo'])) ? $_POST['tipo'] : null;
 
-        $sql = "INSERT INTO segnalazioni
-            (datainv, orainv, via, descrizione, foto, email, tipo, latitudine, longitudine)
-            VALUES
-            ('$data','$ora', '$via', '$descr', '$foto', '$email', '$tipo', '$lat', '$long') ";
-        $result = mysqli_query($conn,$sql);
+if ($data && $ora && $via && $descr && $foto && $email && $lat && $long && $tipo !== null) {
+    $stmt = $conn->prepare("INSERT INTO segnalazioni (datainv, orainv, via, descrizione, foto, email, tipo, latitudine, longitudine) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssidd", $data, $ora, $via, $descr, $foto, $email, $tipo, $lat, $long);
+    $result = $stmt->execute();
 
- if($result){
-echo "<center> inserimento avvenuto. </center>";
+    if ($result) {
+        echo "<center>Inserimento avvenuto.</center>";
+    } else {
+        echo "<center>Errore durante l'inserimento.</center>";
+    }
 
+    $stmt->close();
+} else {
+    echo "<center>Compila tutti i campi.</center>";
 }
 
-
+mysqli_close($conn);
 
 ?>
+
 
 
 </body>

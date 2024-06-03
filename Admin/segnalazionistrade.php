@@ -239,38 +239,44 @@ Modifica gravità di una segnalazione</div>
 	
 <?php
 
-$conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
+$conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
 $idt = (isset($_POST['idt'])) ? $_POST['idt'] : null;
 $grav = (isset($_POST['gravit'])) ? $_POST['gravit'] : null;
 
+if (isset($_POST['submit'])) {
+    if ($idt && $grav !== null) {
+        // Preparare la query per selezionare le segnalazioni
+        $stmt = $conn->prepare("SELECT * FROM segnalazioni WHERE tipo = ?");
+        $tipo = 1;
+        $stmt->bind_param("i", $tipo);
+        $stmt->execute();
+        $resultC = $stmt->get_result();
 
-if (isset($_POST['submit'])){   
+        if ($resultC) {
+            $row = $resultC->fetch_assoc();
+            if ($idt == $row['id']) {
+                // Preparare la query per aggiornare la gravità
+                $stmtUpdate = $conn->prepare("UPDATE segnalazioni SET gravita = ? WHERE id = ?");
+                $stmtUpdate->bind_param("si", $grav, $idt);
+                $result = $stmtUpdate->execute();
 
-if ($idt && $grav !== null) {
-
-  $resultC = mysqli_query($conn,"SELECT * FROM segnalazioni WHERE tipo = '1'");
-  if($resultC){
-    $row = mysqli_fetch_assoc($resultC);
-    if($id == $row['id']){
-      $query = "UPDATE segnalazioni SET gravita = '$grav' WHERE id = '$idt'";
-
-      $result = mysqli_query($conn,$query); 
-
-      if($query){
-        echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
-      } 
-    }else{
-      echo "<p> <center> <font color=black font face='Courier'> Inserisci ID esistente.</b></center></p>";
+                if ($result) {
+                    echo "<br><b><br><p><center><font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br>";
+                }
+            } else {
+                echo "<p><center><font color=black font face='Courier'> Inserisci ID esistente.</b></center></p>";
+            }
+        }
+    } else {
+        echo "<p><center><font color=black font face='Courier'> Compila tutti i campi.</b></center></p>";
     }
-  }
 }
-else {
-  echo ("<p> <center> <font color=black font face='Courier'> Compila tutti i campi.</b></center></p>");
-}
-}
+
+mysqli_close($conn);
 
 ?>
+
 <br><br><br>
 
 <div class="card-header">
