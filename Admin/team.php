@@ -177,47 +177,43 @@
 </table>
 
             
-	<!-- MODIFICA TEAM -->
+<!-- MODIFICA TEAM -->
 
 <br><br><br>
 
 <div class="card-header">
   <i class="fas fa-table"></i>
-Assegna una segnalazione ad un team</div>
+  Assegna una segnalazione ad un team
+</div>
 
-	<form  method="post" action ="team.php" style=" margin-top:5%; margin-left:5%">
-<b>CODICE SEGNALAZIONE: <input type="text" name="id"><br><br></b>
-<b>SELEZIONA L'EMAIL DEL TEAM: </b> <select class="text" name="team"> 
+<form method="post" action="team.php" style="margin-top:5%; margin-left:5%">
+  <b>CODICE SEGNALAZIONE: <input type="text" name="id"><br><br></b>
+  <b>SELEZIONA L'EMAIL DEL TEAM: </b>
+  <select class="text" name="team">
 
-<?php
+  <?php
+  $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
-$conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
+  $selezione = mysqli_query($conn, "SELECT email_t, codice FROM team") or die(mysqli_error($conn));
 
-$selezione = mysqli_query($conn,"SELECT email_t, codice FROM team") or die(mysqli_error());
+  if ($selezione) {
+      while ($array = mysqli_fetch_assoc($selezione)) {
+          $email = htmlspecialchars($array["email_t"], ENT_QUOTES, 'UTF-8');
+          $codice = htmlspecialchars($array["codice"], ENT_QUOTES, 'UTF-8');
 
-if($selezione){
-	while($array=mysqli_fetch_assoc($selezione))
-	{
-		$email = $array["email_t"];
-		$codice = $array["codice"];
+          // da qui c'è il menù a discesa riempito con i valori del database
+          echo "
+          <option value='$codice'>$email</option>
+          ";
+      }
+  }
+  ?>
+  </select>
+  <input type="submit" name="submit" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
+</form>
 
+<br><br><br>
 
-		//da qui c'è il menù a discesa riempito con i valori del database
-	echo"
-
-		<option value='$codice'>$email</option>
-
-	";} }
-?>
-<input type="submit" name="submit" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;">
-
-<?php include ("php/emailteam.php"); ?>
-</select>
-</form>  
-<br>
-
-
-<br><br>
 
 
 

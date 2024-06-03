@@ -1,48 +1,35 @@
 <?php
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+$conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato"); #connessione al db
+if (isset($_SESSION['idT'])) {
+    $upload_path = '../Admin/img/';
+    $team = isset($_POST['team']) ? $_POST['team'] : null;
 
-if(isset($_SESSION['idT'])){
-	$upload_path = '../Admin/img/';
-  
+    $quer = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE stato <> 'Risolto' AND team = ".$_SESSION['idT']);
 
-$team = (isset($_POST['team'])) ? $_POST['team'] : null;
+    while ($row = mysqli_fetch_assoc($quer)) {
+        $id = htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8');
+        $datainv = htmlspecialchars($row['datainv'], ENT_QUOTES, 'UTF-8');
+        $orainv = htmlspecialchars($row['orainv'], ENT_QUOTES, 'UTF-8');
+        $via = htmlspecialchars($row['via'], ENT_QUOTES, 'UTF-8');
+        $descrizione = htmlspecialchars($row['descrizione'], ENT_QUOTES, 'UTF-8');
+        $foto = htmlspecialchars($row['foto'], ENT_QUOTES, 'UTF-8');
+        $tipo = htmlspecialchars($row['tipo'], ENT_QUOTES, 'UTF-8');
+        $stato = htmlspecialchars($row['stato'], ENT_QUOTES, 'UTF-8');
+        $gravita = htmlspecialchars($row['gravita'], ENT_QUOTES, 'UTF-8');
 
-
-
-    $quer = mysqli_query ($conn, "SELECT * FROM segnalazioni WHERE stato  <> 'Risolto' AND team = ".$_SESSION['idT'] );
-  
-
-    while($row = mysqli_fetch_assoc($quer)) {
         echo "
-    <tr>
-     
-                <td>".$row['id']." <br></td>
-                
-                <td>".$row['datainv']." <br></td> 
-                
-              <td>".$row['orainv']."<br></td>
-
-               <td>".$row['via']."<br></td>
-
-                <td>".$row['descrizione']."<br></td>
-
-                 <td><img width='200px' height='200px' src=".$upload_path.$row['foto']."><br></td>
-				  
-				   <td>".$row['tipo']."<br></td>
-
-                   <td>".$row['stato']."<br></td>
-
-                   <td>".$row['gravita']."<br></td>
-               
-          </tr> ";
+        <tr>
+            <td>$id <br></td>
+            <td>$datainv <br></td> 
+            <td>$orainv <br></td>
+            <td>$via <br></td>
+            <td>$descrizione <br></td>
+            <td><img width='200px' height='200px' src='$upload_path$foto'><br></td>
+            <td>$tipo <br></td>
+            <td>$stato <br></td>
+            <td>$gravita <br></td>
+        </tr>";
     }
-
-
-
-  }
-
-
-
+}
 ?>

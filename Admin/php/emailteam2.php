@@ -1,31 +1,20 @@
-
 <?php
 
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
+$conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato"); 
-
-
-$id = $_POST['id'];
-$team = $_POST['team'];
-
+$id = isset($_POST['id']) ? $_POST['id'] : null;
+$team = isset($_POST['team']) ? $_POST['team'] : null;
 
 if ($id && $team !== null) {
 
+    $stmt = $conn->prepare("SELECT email_t FROM team WHERE codice = ?");
+    $stmt->bind_param("s", $team);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-
- $query = ("SELECT email_t FROM team WHERE codice = '$team'"); 
-
-
-$result = mysqli_query($conn, $query);	
-
-
-if ($result){
-
-
-
-echo('<a href="mailto: '.$result.'"><center> Clicca qui per mandare un avviso al team. </center></a>');
-
-}
+    if ($result && $row = $result->fetch_assoc()) {
+        $email_t = htmlspecialchars($row['email_t'], ENT_QUOTES, 'UTF-8');
+        echo('<a href="mailto:' . $email_t . '"><center> Clicca qui per mandare un avviso al team. </center></a>');
+    }
 }
 ?>
