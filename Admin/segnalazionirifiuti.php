@@ -159,9 +159,17 @@
         center:location
       });
       <?php 
-        $conn = mysqli_connect("localhost","root","","civicsense") or die("Connessione fallita");
-        $sql = "SELECT * FROM segnalazioni where tipo = '2' ";
-        $result = mysqli_query($conn,$sql);
+        $conn = new mysqli("localhost", "root", "", "civicsense");
+        if ($conn->connect_error) {
+            die("Connessione fallita: " . $conn->connect_error);
+        }
+        
+        $tipo = '2';
+        $stmt = $conn->prepare("SELECT * FROM segnalazioni WHERE tipo = ?");
+        $stmt->bind_param("s", $tipo);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
         if($result){
           while($row=mysqli_fetch_assoc($result)){
             echo "
@@ -189,8 +197,9 @@
     </script>
     
   <script async defer 
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB7GIu4drL85xcaTdq8hAtRzVWjbKxs3NQ&callback=initMap">
-    </script>
+  src="https://maps.googleapis.com/maps/api/js?key=<?php echo $_ENV['GOOGLE_MAPS_API_KEY']; ?>&callback=initMap">
+  </script>
+
   
   
 			<!-- FINE MAPPA -->
@@ -249,27 +258,35 @@ $grav = (isset($_POST['gravit'])) ? $_POST['gravit'] : null;
 
 if (isset($_POST['submit'])){   
 
-if ($idt && $grav !== null) {
+  if ($idt && $grav !== null) {
 
-  $resultC = mysqli_query($conn,"SELECT * FROM segnalazioni WHERE tipo = '2'");
-  if($resultC){
-    $row = mysqli_fetch_assoc($resultC);
-    if($id == $row['id']){
-      $query = "UPDATE segnalazioni SET gravita = '$grav' WHERE id = '$idt'";
-
-      $result = mysqli_query($conn,$query); 
-
-      if($query){
-        echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
-      } 
-    }else{
-      echo "<p> <center> <font color=black font face='Courier'> Inserisci ID esistente.</b></center></p>";
+    $stmtC = $conn->prepare("SELECT * FROM segnalazioni WHERE tipo = ?");
+    $tipo = '2';
+    $stmtC->bind_param("s", $tipo);
+    $stmtC->execute();
+    $resultC = $stmtC->get_result();
+  
+    if($resultC){
+      $row = mysqli_fetch_assoc($resultC);
+      if($id == $row['id']){
+        
+        $stmt = $conn->prepare("UPDATE segnalazioni SET gravita = ? WHERE id = ?");
+        $stmt->bind_param("si", $grav, $idt);
+        $stmt->execute();
+        $result = $stmt->get_result();
+  
+        if($result){
+          echo("<br><b><br><p> <center> <font color=black font face='Courier'> Aggiornamento avvenuto correttamente. Ricarica la pagina per aggiornare la tabella.</b></center></p><br><br> ");
+        } 
+      }else{
+        echo "<p> <center> <font color=black font face='Courier'> Inserisci ID esistente.</b></center></p>";
+      }
     }
   }
-}
-else {
-  echo ("<p> <center> <font color=black font face='Courier'> Compila tutti i campi.</b></center></p>");
-}
+  else {
+    echo ("<p> <center> <font color=black font face='Courier'> Compila tutti i campi.</b></center></p>");
+  }
+  
 }
 
 ?>

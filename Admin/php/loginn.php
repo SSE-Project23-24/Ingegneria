@@ -20,9 +20,10 @@
 			$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
 	        mysqli_select_db ("civicsense") or die ("DataBase non trovato"); #connessione al db
 
-
-			$sql = 'SELECT * FROM team WHERE email_t = ' .$email. ';';
-			$result = mysqli_query($conn, $sql);	
+			$stmt = $conn->prepare("SELECT * FROM team WHERE email_t = ?");
+			$stmt->bind_param("s", $email);
+			$stmt->execute();
+			$result = $stmt->get_result();
 
 			if (mysqli_num_rows($result) > 0) {
 	   

@@ -261,8 +261,6 @@ $conn = mysqli_connect ("localhost", "root", "","civicsense") or die ("Connessio
 
 #salvo i nomi (name) dei form in una variabile php, richiamando i valori dal form con _POST (se nel fotm era 'method=get' diventava $_GET)
 
-
-	
 $email = (isset($_POST['email'])) ? $_POST['email'] : null;
 $nomi = (isset($_POST['nomi'])) ? $_POST['nomi'] : null;
 $numeri = (isset($_POST['numero'])) ? $_POST['numero'] : null;
@@ -273,13 +271,11 @@ if (isset($_POST['submit3'])){
 if ($email && $nomi && $numeri && $pass !== null) {
 #inserisco i valori salvati dal form nella query di inserimento
 
- $toinsert = "INSERT INTO team
-			(email_t, npersone, nomi, password)
-			VALUES
-			('$email','$numeri', '$nomi','$pass')";
-
-
-$result = mysqli_query($conn, $toinsert);	
+// Preparare la query per inserire un nuovo team
+$stmt = $conn->prepare("INSERT INTO team (email_t, npersone, nomi, password) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("siss", $email, $numeri, $nomi, $pass);
+$stmt->execute();
+$result = $stmt->get_result();
 
 if($result){
 	echo("<b><br><p> <center> <font color=black font face='Courier'> Inserimento avvenuto correttamente! Ricarica la pagina per vedere la tabella aggiornata!</p></b></center>");

@@ -30,9 +30,11 @@
 
 		try {
 			if (move_uploaded_file($_FILES['image']['tmp_name'], $file_path)) {
-				$sql = "INSERT INTO `segnalazioni`(`datainv`, `orainv`, `via`, `descrizione`, `foto`, `email`, `tipo`, `latitudine`, `longitudine`) 
-				VALUES (CURRENT_DATE, CURRENT_TIME, '".$via."', '".$descrizione."', '{$img_name}', '".$email."', '".$tipo."', ".$lat.", ".$lng.")";
-				$result = mysqli_query($conn, $sql);
+				$stmt = $conn->prepare("INSERT INTO `segnalazioni`(`datainv`, `orainv`, `via`, `descrizione`, `foto`, `email`, `tipo`, `latitudine`, `longitudine`) 
+				VALUES (CURRENT_DATE, CURRENT_TIME, ?, ?, ?, ?, ?, ?, ?)");
+				$stmt->bind_param("ssssiff", $via, $descrizione, $img_name, $email, $tipo, $lat, $lng);
+				$stmt->execute();
+				$result = $stmt->get_result();
 				if ($result) {
 					echo "Inserimento dei dati completato";
 				} else {
