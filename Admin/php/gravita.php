@@ -1,9 +1,6 @@
 <?php
 
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-
-mysqli_select_db ("civicsense") or die ("DataBase non trovato"); 
-
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $id = (isset($_POST['id'])) ? $_POST['id'] : null;
 $stato = (isset($_POST['stato'])) ? $_POST['stato'] : null;

@@ -18,9 +18,7 @@ var chart = AmCharts.makeChart("chartdiv", {
 	
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato");
-
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 $quer = mysqli_query ($conn, "Select COUNT(*) AS cont
 FROM segnalazioni
 Where month(datainv) = 01 AND tipo = '4' ");
@@ -50,8 +48,7 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato");
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $quer = mysqli_query ($conn, "Select COUNT(*) AS cont
 FROM segnalazioni
@@ -76,8 +73,7 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato");
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $quer = mysqli_query ($conn, "Select COUNT(*) AS cont
 FROM segnalazioni
@@ -101,8 +97,7 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato");
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $quer = mysqli_query ($conn, "Select COUNT(*) AS cont
 FROM segnalazioni
@@ -126,8 +121,7 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato");
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $quer = mysqli_query ($conn, "Select COUNT(*) AS cont
 FROM segnalazioni
@@ -151,8 +145,7 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato");
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $quer = mysqli_query ($conn, "Select COUNT(*) AS cont
 FROM segnalazioni
@@ -176,8 +169,7 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato");
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $quer = mysqli_query ($conn, "Select COUNT(*) AS cont
 FROM segnalazioni
@@ -201,8 +193,7 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato");
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $quer = mysqli_query ($conn, "Select COUNT(*) AS cont
 FROM segnalazioni
@@ -226,8 +217,7 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato");
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $quer = mysqli_query ($conn, "Select COUNT(*) AS cont
 FROM segnalazioni
@@ -251,8 +241,7 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato");
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $quer = mysqli_query ($conn, "Select COUNT(*) AS cont
 FROM segnalazioni
@@ -276,8 +265,7 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato");
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $quer = mysqli_query ($conn, "Select COUNT(*) AS cont
 FROM segnalazioni
@@ -301,8 +289,7 @@ if (mysqli_num_rows($quer) > 0) {
     "value1": 
 	<?php 
 	
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato");
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $quer = mysqli_query ($conn, "Select COUNT(*) AS cont
 FROM segnalazioni

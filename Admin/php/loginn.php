@@ -17,8 +17,7 @@
 		else
 		{
 			//Connessione Database
-			$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-	        mysqli_select_db ("civicsense") or die ("DataBase non trovato"); #connessione al db
+			$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 			$stmt = $conn->prepare("SELECT * FROM team WHERE email_t = ?");
 			$stmt->bind_param("s", $email);

@@ -264,7 +264,7 @@ if (isset($_POST['submit'])) {
             if ($idt == $row['id']) {
                 // Preparare la query per aggiornare la gravità
                 $stmtUpdate = $conn->prepare("UPDATE segnalazioni SET gravita = ? WHERE id = ?");
-                $stmtUpdate->bind_param("si", $grav, $idt);
+                $stmtUpdate->bind_param("ii", $grav, $idt);
                 $result = $stmtUpdate->execute();
 
                 if ($result) {

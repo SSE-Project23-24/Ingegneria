@@ -60,9 +60,7 @@
 	
 <?php
 
-$conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); 
-mysqli_select_db ("civicsense") or die ("DataBase non trovato"); 
-
+$conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); 
 
 $email = (isset($_POST['email'])) ? $_POST['email'] : null;
 $pass = (isset($_POST['password'])) ? $_POST['password'] : null;

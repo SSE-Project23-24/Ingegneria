@@ -271,7 +271,7 @@ if (isset($_POST['submit'])){
       if($id == $row['id']){
         
         $stmt = $conn->prepare("UPDATE segnalazioni SET gravita = ? WHERE id = ?");
-        $stmt->bind_param("si", $grav, $idt);
+        $stmt->bind_param("ii", $grav, $idt);
         $stmt->execute();
         $result = $stmt->get_result();
   

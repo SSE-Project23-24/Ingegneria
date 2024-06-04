@@ -87,11 +87,7 @@
     else
     {
       //Connessione Database
-     $conn = mysqli_connect ("localhost", "root", "") or die ("Connessione non riuscita"); #connessione a mysqli, la pass non la ho xk è scaricato automaticamente
-
-mysqli_select_db ("civicsense") or die ("DataBase non trovato"); #connessione al db
-
-
+      $conn = mysqli_connect ("localhost", "root", "", "civicsense") or die ("Connessione non riuscita"); #connessione a mysqli, la pass non la ho xk è scaricato automaticamente
 
       $sql = "SELECT * FROM team ";
      
