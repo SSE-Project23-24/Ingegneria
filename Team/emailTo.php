@@ -2,12 +2,27 @@
 session_start();
 //puoi modificare la pagina per farla funzionare nella tua macchina
 //adatto a tutti i domini (GMAIL,LIBERO.HOTMAIL)
-//classi per l'invio dell'email (PHPMailer 5.2)
+//classi per l'invio dell'email (PHPMailer 5.2) 
 
 
 require ('phpmailer/class.phpmailer.php');
 include('phpmailer/class.smtp.php');
-$conn = new mysqli ("localhost", "root", "","civicsense") or die ("Connessione non riuscita"); 
+$config = file_get_contents('config.json');
+
+$config_data = json_decode($config, true);
+
+$db_host = $config_data['db_host'];
+$db_user = $config_data['db_user'];
+$db_password = $config_data['db_password'];
+$db_name = $config_data['db_name'];
+
+$conn = new mysqli($db_host, $db_user, $db_password, $db_name);
+
+if ($conn->connect_error) {
+    die("Connessione non riuscita: " . $conn->connect_error);
+}
+
+echo "Connessione riuscita";
 
 if (isset($_POST['id'])&& isset($_POST['stato'])) {
 	$idS = $_POST['id'];
