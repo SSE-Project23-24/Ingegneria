@@ -1,8 +1,13 @@
 <?php
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+
 session_start();
 
-require ('phpmailer/class.phpmailer.php');
-include('phpmailer/class.smtp.php');
+require ('Team/phpmailer/PHPMailer.php');
+include('Team/phpmailer/SMTP.php');
 $conn = new mysqli("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
 if (isset($_POST['id']) && isset($_POST['stato'])) {

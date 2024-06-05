@@ -1,12 +1,12 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 session_start();
-//puoi modificare la pagina per farla funzionare nella tua macchina
-//adatto a tutti i domini (GMAIL,LIBERO.HOTMAIL)
-//classi per l'invio dell'email (PHPMailer 5.2) 
 
-
-require ('phpmailer/class.phpmailer.php');
-include('phpmailer/class.smtp.php');
+require 'Team/phpmailer/Exception.php';
+require 'Team/phpmailer/PHPMailer.php';
+require 'Team/phpmailer/SMTP.php';
 $config = file_get_contents('config.json');
 
 $config_data = json_decode($config, true);
