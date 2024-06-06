@@ -40,13 +40,13 @@
               <div class="form-row">
                 <div class="col-md-6">
                   <div class="form-label-group">
-                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required">
+                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required" autocomplete="off">
                     <label for="inputPassword">Password</label>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-label-group">
-                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required="required">
+                    <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required="required" autocomplete="off">
                     <label for="confirmPassword">Conferma la password</label>
                   </div>
                 </div>
@@ -73,8 +73,8 @@ $stmt->bind_param("ss", $pass, $email);
 $stmt->execute();
 $result = $stmt->get_result();
 
-if($query){
-	echo("<br><b><br><p> <center> <font color=white font face='Courier'> Password registrata! Clicca su <a href='login.php'> Login </a> per accedere. </b></center></p><br><br> ");
+if($result){
+	echo("<br><b><br><p> <center> <font color=white font face='Courier'> Password registrata! Clicca su <a href='login.php'>Login </a>per accedere. </b></center></p><br><br> ");
 } 
 }	
 	

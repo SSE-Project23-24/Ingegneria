@@ -1,13 +1,20 @@
 <?php
+
+$config2 = file_get_contents(__DIR__ . '/../config2.json');
+
+$config2_data = json_decode($config2, true);
+
+$pass = $config2_data['password'];
+
 //Recupero dati
 if (isset($_POST['email']) && isset($_POST['password'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     if ($email == "civicsense18@gmail.com") {
-        if ($password == "admin") {
+        if ($password == $pass) {
             echo 'Accesso consentito alla sezione riservata';
         } else {
-            echo 'Accesso negato alla sezione riservata.La password � errata!';
+            echo 'Accesso negato alla sezione riservata La password è errata!';
         }
     } else {
         $config = file_get_contents('config.json');

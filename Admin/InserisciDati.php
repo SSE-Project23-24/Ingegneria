@@ -1,5 +1,14 @@
 <?php
-	$conn = new MySQLi("localhost", "root", "", "civicsense");
+	$config = file_get_contents(__DIR__ . '/../config.json');
+
+    $config_data = json_decode($config, true);
+
+    $db_host = $config_data['db_host'];
+    $db_user = $config_data['db_user'];
+    $db_password = $config_data['db_password'];
+    $db_name = $config_data['db_name'];
+
+    $conn = new mysqli($db_host, $db_user, $db_password, $db_name);
 
 	$upload_path = 'jpeg/';
 

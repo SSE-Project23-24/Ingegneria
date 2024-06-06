@@ -7,7 +7,7 @@ session_start();
 require 'Team/phpmailer/Exception.php';
 require 'Team/phpmailer/PHPMailer.php';
 require 'Team/phpmailer/SMTP.php';
-$config = file_get_contents('config.json');
+$config = file_get_contents(__DIR__ . '/../config.json');
 
 $config_data = json_decode($config, true);
 

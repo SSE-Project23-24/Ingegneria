@@ -67,13 +67,20 @@
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <?php
+
+    $config2 = file_get_contents(__DIR__ . '/../config2.json');
+
+    $config2_data = json_decode($config2, true);
+
+    $pass = $config2_data['password'];
+
   //Recupero dati
   if(isset($_POST['email']) && isset($_POST['password'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
     if($email == "civicsense2019@gmail.com")
     {
-      if($password == "admin")
+      if($password == $pass)
       {
         echo 'Accesso consentito alla sezione riservata';
         echo '<script>window.location.href = "index.php";</script>';
