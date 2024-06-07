@@ -1,6 +1,13 @@
 <?php
 require ('C:\xampp\htdocs\Ingegneria\Admin\phpmailer\class.phpmailer.php');
 include('C:\xampp\htdocs\Ingegneria\Admin\phpmailer\class.smtp.php');
+
+$config2 = file_get_contents(__DIR__ . '/../config2.json');
+
+$config2_data = json_decode($config2, true);
+
+$phpMailerPass = $config2_data['PhpMailerPass'];
+
 $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
 
 $id = isset($_POST['id']) ? mysqli_real_escape_string($conn, $_POST['id']) : null;
@@ -38,7 +45,7 @@ if (isset($_POST['submit'])) {
                         $mail->SMTPKeepAlive = true;
                         $mail->Mailer = "smtp";
                         $mail->Username   = "civicsense2019@gmail.com";
-                        $mail->Password   = "c1v1csense2019";
+                        $mail->Password   = $phpMailerPass;
                         $mail->AddAddress($row["email_t"]);
                         $mail->SetFrom("civicsense2019@gmail.com");
                         $mail->Subject = 'Nuova Segnalazione';

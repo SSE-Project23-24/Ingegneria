@@ -8,6 +8,12 @@ require 'Admin/phpmailer/Exception.php';
 require 'Admin/phpmailer/PHPMailer.php';
 require 'Admin/phpmailer/SMTP.php';
 
+$config2 = file_get_contents(__DIR__ . '/../config2.json');
+
+$config2_data = json_decode($config2, true);
+
+$phpMailerPass = $config2_data['PhpMailerPass'];
+
 $conn = new mysqli("localhost", "root", "", "civicsense");
 if ($conn->connect_error) {
     die("Connessione non riuscita: " . $conn->connect_error);
@@ -39,7 +45,7 @@ if (isset($_POST['id']) && isset($_POST['stato'])) {
                     $mail->Host = 'smtp.gmail.com';
                     $mail->Port = 465;
                     $mail->Username = 'civicsense18@gmail.com';
-                    $mail->Password = 'c1v1csense2019';
+                    $mail->Password = $phpMailerPass;
                     $mail->setFrom('civicsense18@gmail.com');
                     $mail->addAddress($_SESSION['email']);
                     $mail->Subject = 'Nuova Segnalazione';

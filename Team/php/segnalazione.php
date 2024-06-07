@@ -5,9 +5,12 @@ if (isset($_SESSION['idT'])) {
     $upload_path = '../Admin/img/';
     $team = isset($_POST['team']) ? $_POST['team'] : null;
 
-    $quer = mysqli_query($conn, "SELECT * FROM segnalazioni WHERE stato <> 'Risolto' AND team = ".$_SESSION['idT']);
+    $stmt = $conn->prepare("SELECT * FROM segnalazioni WHERE stato <> 'Risolto' AND team = ?");
+    $stmt->bind_param("i", $_SESSION['idT']);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    while ($row = mysqli_fetch_assoc($quer)) {
+    while ($row = $result->fetch_assoc()) {
         $id = htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8');
         $datainv = htmlspecialchars($row['datainv'], ENT_QUOTES, 'UTF-8');
         $orainv = htmlspecialchars($row['orainv'], ENT_QUOTES, 'UTF-8');
