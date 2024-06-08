@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>SB Admin - Register</title>
+    <title>SB Admin - Change Team Password</title>
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="css/sb-admin.css" rel="stylesheet">
@@ -25,7 +25,7 @@
 <body class="bg-dark">
 <div class="container">
     <div class="card card-register mx-auto mt-5">
-        <div class="card-header">Registra la password del team</div>
+        <div class="card-header">Cambia la password del team</div>
         <div class="card-body">
             <form action="registrateam.php" method="POST">
                 <div class="form-group">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div id="passwordStrength" class="mt-2"></div>
-                <button type="submit" id="submit-button" class="btn btn-primary btn-block" disabled>Registrati</button>
+                <button type="submit" id="submit-button" class="btn btn-primary btn-block" disabled>Cambia Password</button>
             </form>
         </div>
     </div>
@@ -191,7 +191,7 @@ if ($email && $old_pass && $new_pass !== null) {
     $stmt->bind_result($codice, $stored_email, $npersone, $nomi, $stored_hash);
     $stmt->fetch();
 
-    if (password_verify($old_pass, $stored_hash)) {
+    if ($old_pass == $stored_hash) {
         if (validate_password($new_pass)) {
             $hashed_password = password_hash($new_pass, PASSWORD_DEFAULT);
 
