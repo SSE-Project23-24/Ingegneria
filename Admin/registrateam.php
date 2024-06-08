@@ -191,7 +191,7 @@ if ($email && $old_pass && $new_pass !== null) {
     $stmt->bind_result($codice, $stored_email, $npersone, $nomi, $stored_hash);
     $stmt->fetch();
 
-    if ($old_pass == $stored_hash) {
+    if (password_verify($old_pass, $stored_hash)) {
         if (validate_password($new_pass)) {
             $hashed_password = password_hash($new_pass, PASSWORD_DEFAULT);
 
