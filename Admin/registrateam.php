@@ -57,13 +57,14 @@
                     </div>
                 </div>
                 <div id="passwordStrength" class="mt-2"></div>
-                <button type="submit" class="btn btn-primary btn-block">Registrati</button>
+                <button type="submit" id="submit-button" class="btn btn-primary btn-block" disabled>Registrati</button>
             </form>
         </div>
     </div>
 </div>
 
-<script>
+<script type="application/javascript">
+    
     document.getElementById('inputPassword').addEventListener('input', function() {
         var password = this.value;
         var strengthText = '';
@@ -149,6 +150,26 @@
             this.style.borderColor = 'red';
         }
     });
+
+    function checkRegistrationButton() {
+        var email = document.getElementById('inputEmail').value;
+        var oldPassword = document.getElementById('oldPassword').value;
+        var password = document.getElementById('inputPassword').value;
+        var confirmPassword = document.getElementById('confirmPassword').value;
+        var submitButton = document.getElementById('submit-button');
+
+        if (email && oldPassword && password && confirmPassword && password === confirmPassword) {
+            submitButton.disabled = false;
+        } else {
+            submitButton.disabled = true;
+        }
+    }
+
+    document.getElementById('inputEmail').addEventListener('input', checkRegistrationButton);
+    document.getElementById('oldPassword').addEventListener('input', checkRegistrationButton);
+    document.getElementById('inputPassword').addEventListener('input', checkRegistrationButton);
+    document.getElementById('confirmPassword').addEventListener('input', checkRegistrationButton);
+</script>
 </script>
 <?php
 $conn = mysqli_connect("localhost", "root", "", "civicsense") or die("Connessione non riuscita");
