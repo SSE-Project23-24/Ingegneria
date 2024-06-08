@@ -162,36 +162,35 @@ if ($email && $old_pass && $new_pass !== null) {
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
-    $result = $stmt->get_result();
-    if ($result->num_rows === 0) exit('No rows');
-    $row = $result->fetch_assoc();
 
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($codice, $stored_email, $npersone, $nomi, $stored_hash);
-        $stmt->fetch();
-        if ($old_pass == $stored_hash) {
-            if (validate_password($new_pass)) {
-                $hashed_password = password_hash($new_pass, PASSWORD_BCRYPT);
+    if ($stmt->num_rows === 0) {
+        exit('No rows');
+    }
 
-                $update_stmt = $conn->prepare("UPDATE team SET password = ? WHERE email_t = ?");
-                $update_stmt->bind_param("ss", $hashed_password, $email);
-                $update_stmt->execute();
+    $stmt->bind_result($codice, $stored_email, $npersone, $nomi, $stored_hash);
+    $stmt->fetch();
 
-                if ($update_stmt->affected_rows > 0) {
-                    echo("<br><b><br><p> <center> <font color=white font face='Courier'> Password aggiornata! Clicca su <a href='login.php'>Login</a> per accedere. </b></center></p><br><br> ");
-                } else {
-                    echo("<br><b><br><p> <center> <font color=white font face='Courier'> Errore nell'aggiornamento della password. </b></center></p><br><br> ");
-                }
-                $update_stmt->close();
+    if (password_verify($old_pass, $stored_hash)) {
+        if (validate_password($new_pass)) {
+            $hashed_password = password_hash($new_pass, PASSWORD_DEFAULT);
+
+            $update_stmt = $conn->prepare("UPDATE team SET password = ? WHERE email_t = ?");
+            $update_stmt->bind_param("ss", $hashed_password, $email);
+            $update_stmt->execute();
+
+            if ($update_stmt->affected_rows > 0) {
+                echo("<br><b><br><p> <center> <font color=white font face='Courier'> Password aggiornata! Clicca su <a href='login.php'>Login</a> per accedere. </b></center></p><br><br> ");
             } else {
-                echo("<br><b><br><p> <center> <font color=white font face='Courier'> La nuova password non è valida. </b></center></p><br><br> ");
+                echo("<br><b><br><p> <center> <font color=white font face='Courier'> Errore nell'aggiornamento della password. </b></center></p><br><br> ");
             }
+            $update_stmt->close();
         } else {
-            echo("<br><b><br><p> <center> <font color=white font face='Courier'> Vecchia password errata. </b></center></p><br><br> ");
+            echo("<br><b><br><p> <center> <font color=white font face='Courier'> La nuova password non è valida. </b></center></p><br><br> ");
         }
     } else {
-        echo("<br><b><br><p> <center> <font color=white font face='Courier'> Email non trovata. </b></center></p><br><br> ");
+        echo("<br><b><br><p> <center> <font color=white font face='Courier'> Vecchia password errata. </b></center></p><br><br> ");
     }
+
     $stmt->close();
 }
 $conn->close();
@@ -210,6 +209,7 @@ function validate_password($password): bool
     return $strength >= 3;
 }
 ?>
+
 
 <script src="vendor/jquery/jquery.min.js"></script>
 <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
