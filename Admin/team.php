@@ -35,7 +35,19 @@
             color: green;
         }
     </style>
-
+    <style>
+        .password-container {
+            position: relative;
+            display: inline-block;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 
 </head>
 <body id="page-top">
@@ -263,14 +275,18 @@
                         <b>NOMI E COGNOMI DEI COMPONENTI:</b> <input type="text" id="nomi" name="nomi"><br><br>
                         <b>NUMERO DI COMPONENTI: </b> <input type="number" id="numero" name="numero"><br><br>
                         <b>PASSWORD:</b>
-                        <input type="password" id="inputPassword" name="inputPassword" autocomplete="off">
-                        <input type="checkbox" id="togglePassword" onclick="togglePasswordVisibility('inputPassword')"> Visualizza Password
+                        <div class="password-container">
+                            <input type="password" id="inputPassword" name="inputPassword" autocomplete="off">
+                            <i class="fas fa-eye password-toggle" id="togglePassword" onclick="togglePasswordVisibility('inputPassword', 'togglePassword')"></i>
+                        </div>
                         <br>
                         <div id="passwordStrength" class="mt-2"></div>
 
                         <b>CONFIRM PASSWORD:</b>
-                        <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="off">
-                        <input type="checkbox" id="toggleConfirmPassword" onclick="togglePasswordVisibility('confirmPassword')"> Visualizza Password
+                        <div class="password-container">
+                            <input type="password" id="confirmPassword" name="confirmPassword" autocomplete="off">
+                            <i class="fas fa-eye password-toggle" id="toggleConfirmPassword" onclick="togglePasswordVisibility('confirmPassword', 'toggleConfirmPassword')"></i>
+                        </div>
                         <br>
                         <input type="submit" name="submit3" id="submit-button" class="btn btn-primary btn-block" style="width:15%; margin-top:5%;" disabled>
                     </form>
@@ -376,12 +392,17 @@
                         }
                     }
 
-                    function togglePasswordVisibility(inputId) {
+                    function togglePasswordVisibility(inputId, toggleId) {
                         var inputField = document.getElementById(inputId);
+                        var toggleIcon = document.getElementById(toggleId);
                         if (inputField.type === "password") {
                             inputField.type = "text";
+                            toggleIcon.classList.remove("fa-eye");
+                            toggleIcon.classList.add("fa-eye-slash");
                         } else {
                             inputField.type = "password";
+                            toggleIcon.classList.remove("fa-eye-slash");
+                            toggleIcon.classList.add("fa-eye");
                         }
                     }
 
