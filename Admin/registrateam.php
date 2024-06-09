@@ -21,6 +21,18 @@
             color: green;
         }
     </style>
+    <style>
+        .password-container {
+            position: relative;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body class="bg-dark">
 <div class="container">
@@ -38,20 +50,23 @@
                     <div class="form-label-group">
                         <input type="password" name="old_password" id="oldPassword" class="form-control" placeholder="Vecchia Password" required="required" autocomplete="off">
                         <label for="oldPassword">Vecchia Password</label>
+                        <i class="fas fa-eye password-toggle" id="toggleConfirmPassword" onclick="togglePasswordVisibility('oldPassword', 'toggleOldPassword')"></i>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-6">
-                            <div class="form-label-group">
+                            <div class="form-label-group password-container">
                                 <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required="required" autocomplete="off">
                                 <label for="inputPassword">Password</label>
+                                <i class="fas fa-eye password-toggle" id="togglePassword" onclick="togglePasswordVisibility('inputPassword', 'togglePassword')"></i>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-label-group">
+                            <div class="form-label-group password-container">
                                 <input type="password" id="confirmPassword" class="form-control" placeholder="Confirm password" required="required" autocomplete="off">
                                 <label for="confirmPassword">Conferma la password</label>
+                                <i class="fas fa-eye password-toggle" id="toggleConfirmPassword" onclick="togglePasswordVisibility('confirmPassword', 'toggleConfirmPassword')"></i>
                             </div>
                         </div>
                     </div>
@@ -162,6 +177,20 @@
             submitButton.disabled = false;
         } else {
             submitButton.disabled = true;
+        }
+    }
+
+    function togglePasswordVisibility(inputId, toggleId) {
+        var inputField = document.getElementById(inputId);
+        var toggleIcon = document.getElementById(toggleId);
+        if (inputField.type === "password") {
+            inputField.type = "text";
+            toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
+        } else {
+            inputField.type = "password";
+            toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
         }
     }
 

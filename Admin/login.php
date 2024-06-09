@@ -52,7 +52,7 @@
 			
          <button type="submit" class="btn btn-primary btn-block" > Login</button> 
 		 <br>
-		 <center> <a class="d-block small mt-3" href="registrateam.php">Sei un nuovo team? Registra la tua password!</a> </center>
+		 <center> <a class="d-block small mt-3" href="registrateam.php">Sei un nuovo team? Sostituisci la password di default con la tua personale!</a> </center>
           </form>
          
         </div>
